@@ -1,0 +1,86 @@
+$row-width: 960px !default
+$column-gutter: 20px !default
+$total-columns: 12 !default
+
+
+@function gridCalc($colNumber, $total-columns)
+  @return percentage(($colNumber / $total-columns))
+
+@function convert-number-to-word($num)
+  $count: 1
+  @each $word in one,two,three,four,five,six,seven,eight,nine,ten,eleven, twelve,thirteen,fourteen,fifteen,sixteen,seventeen,eighteen,nineteen, twenty,twentyone,twentytwo,twentythree,twentyfour
+    @if $count == $num
+      @return $word
+    $count: $count + 1
+  @return "invalid"
+
+
+%row
+  +box-sizing(border-box)
+  margin-left: auto
+  margin-right: auto
+  +pie-clearfix
+  width: 100%
+
+%inner-row, .row .row
+  margin-left: -($column-gutter/2)
+  margin-right: -($column-gutter/2)
+  width: auto
+
+
+%column-base
+  +box-sizing(border-box)
+  float: left
+  min-height: 1px
+  padding-left: $column-gutter/2
+  padding-right: $column-gutter/2
+  position: relative
+
+=column($columns: $columns, $behavior: false)
+  @if $behavior == center
+    float: none
+    margin-left: auto
+    margin-right: auto
+    @extend %column-base
+    width: gridCalc($columns, $total-columns)
+  @else if $behavior == collapse
+    float: left
+    @extend %column-base
+    padding-left: 0
+    padding-right: 0
+    width: gridCalc($columns, $total-columns)
+  @else
+    float: left
+    @extend %column-base
+    width: gridCalc($columns, $total-columns)
+
+
+// Columns
+@for $i from 1 through $total-columns
+  %#{convert-number-to-word($i)}
+    +column($i)
+
+// Collapse
+@for $i from 1 through $total-columns
+  %collapse-#{convert-number-to-word($i)}
+    +column($i, collapse)
+
+// Centered
+@for $i from 1 through $total-columns
+  %center-#{convert-number-to-word($i)}
+    +column($i, center)
+
+// Offset
+@for $i from 1 through $total-columns
+  %offset-#{convert-number-to-word($i)}
+    margin-left: gridCalc($i, $total-columns)
+
+// Push
+@for $i from 1 through $total-columns
+  %push-#{convert-number-to-word($i)}
+    left: gridCalc($i, $total-columns)
+
+// Pull
+@for $i from 1 through $total-columns
+  %pull-#{convert-number-to-word($i)}
+    right: gridCalc($i, $total-columns)

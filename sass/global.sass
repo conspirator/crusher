@@ -1,0 +1,164 @@
+@import compass/css3
+@import compass/utilities/general
+@import normalize
+@import crusher
+
+$blue: #30587E
+$dark-blue: #02244C
+$green: #7ABE47
+
+$y-spacer: 30px
+
+$code: 'courier new', courier, serif
+
+
+ul, ol
+  padding-left: 0
+
+body
+  background: $blue
+  color: #333
+  font-family: sans-serif
+  line-height: 1.5
+  position: relative
+
+h1, h2, h3, h4, h5, h6
+  font-weight: bold
+
+header, .wrap > section, footer
+  margin: 0 auto
+  max-width: 960px
+
+.page-grid
+  h2
+    font: normal bold 150%/1 sans-serif
+    margin-bottom: $y-spacer/2
+    a
+      color: #333
+      text-decoration: none
+      &:hover
+        &:after
+          content: "\221E"
+          margin-left: 5px
+          +opacity(.3)
+
+  p
+    margin: 0 0 16px
+    &:last-child
+      margin-bottom: 0
+  code
+    font-family: $code
+  section
+    border-bottom: 1px solid #ccc
+    margin-bottom: $y-spacer
+    padding-bottom: $y-spacer
+    &:last-child
+      border-bottom: none
+      margin-bottom: 0
+    .row
+      background: rgba(black, .1)
+      margin-bottom: 5px
+      padding: 5px 0
+      +clearfix
+      > div
+        background: rgba(black, .1)
+        span
+          background: $green
+          color: #fff
+          display: block
+          font-family: $code
+          padding: 5px 0
+          text-align: center
+  .wrap
+    background: #fff
+    padding: $y-spacer 10px
+  header
+    +clearfix
+    padding: 10px
+    hgroup
+      float: left
+      h1
+        font: normal bold 35px/38px sans-serif
+        letter-spacing: -3px
+        position: relative
+        top: -5px
+        span
+          display: inline-block
+          font-family: menlo, sans-serif
+          font-size: 125%
+          height: 38px
+          line-height: 38px
+          padding-right: 8px
+    a
+      color: #fff
+      text-decoration: none
+    nav
+      float: right
+      ul
+        float: right
+        list-style: none
+        li
+          float: left
+          margin-left: 5px
+          margin-right: 5px
+          &:last-child
+            margin-right: 0
+          a
+            +border-radius(5px)
+            display: block
+            height: 38px
+            line-height: 38px
+            overflow: hidden
+            text-align: center
+            text-overflow: ellipsis
+            padding: 0 5px
+            white-space: nowrap
+            +transition(all .25s ease-in-out)
+            &:hover
+              background: $dark-blue
+              color: $green
+  footer
+    color: #fff
+    font-size: 75%
+    padding: $y-spacer/2 10px
+    text-align: center
+
+@media screen and (max-width: 585px)
+  .page-grid header
+    hgroup
+      float: none
+      margin-bottom: $y-spacer/2
+      text-align: center
+    nav
+      float: none
+      width: 100%
+      ul
+        float: none
+        width: 100%
+        li
+          float: none
+          margin: 0 0 5px 0
+          width: 100%
+          a
+            background: $dark-blue
+            &:hover
+              color: $green
+
+// Rows
+.row
+  @extend %row
+  .row
+    @extend %inner-row
+
+// Columns
+@each $word in one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve
+  .#{$word}
+    @extend %#{$word}
+  .pull-#{$word}
+    @extend %pull-#{$word}
+  .push-#{$word}
+    @extend %push-#{$word}
+  .center-#{$word}
+    @extend %center-#{$word}
+  .collapse-#{$word}
+    @extend %collapse-#{$word}
